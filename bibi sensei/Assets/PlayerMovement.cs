@@ -5,11 +5,10 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float MovementSpeed = 10.0f;
+    [SerializeField] private float MovementSpeed = 3f;
     [SerializeField] private float JumpHeight = 10.0f;
 
     private Rigidbody2D _rigidbody2D;
-    private Vector2 _movementDir;
 
     private bool isOnGround = true;
     
@@ -17,7 +16,6 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         _rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
-        _movementDir=new Vector2(0,0);
     }
     
     private void FixedUpdate()
@@ -26,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (isOnGround)
             {
-                _rigidbody2D.velocity += (Vector2.up*JumpHeight);
+                _rigidbody2D.velocity += (Vector2.up*JumpHeight*10f);
                 isOnGround = false;
             }
         }
@@ -41,14 +39,21 @@ public class PlayerMovement : MonoBehaviour
         {
             _rigidbody2D.velocity += (Vector2.left*MovementSpeed);
         }
-        
-        _rigidbody2D.velocity = Vector2.Lerp(_rigidbody2D.velocity,Vector2.zero, 0.3f);
+
+        if (!Input.anyKey)
+        {
+            var rigidbody2DVelocity = _rigidbody2D.velocity;
+
+            rigidbody2DVelocity.x = 0;
+
+        }
+
 
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Ground") ||other.gameObject.CompareTag("Player") )
+        if (other.gameObject.CompareTag("Ground") ||other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Obstacle") )
         {
             isOnGround = true;
         }
