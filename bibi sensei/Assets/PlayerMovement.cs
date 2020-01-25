@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (isOnGround)
             {
-                _rigidbody2D.velocity = (Vector2.up*JumpHeight);
+                _rigidbody2D.velocity += (Vector2.up*JumpHeight);
                 isOnGround = false;
             }
         }
@@ -34,11 +34,12 @@ public class PlayerMovement : MonoBehaviour
        
         if (Input.GetKey(KeyCode.D))
         {
-            _rigidbody2D.velocity = (Vector2.right*MovementSpeed);
+            _rigidbody2D.velocity += (Vector2.right*MovementSpeed);
+            
         }
         if (Input.GetKey(KeyCode.A))
         {
-            _rigidbody2D.velocity = (Vector2.left*MovementSpeed);
+            _rigidbody2D.velocity += (Vector2.left*MovementSpeed);
         }
         
         _rigidbody2D.velocity = Vector2.Lerp(_rigidbody2D.velocity,Vector2.zero, 0.3f);
@@ -47,9 +48,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Ground"))
+        if (other.gameObject.CompareTag("Ground") ||other.gameObject.CompareTag("Player") )
         {
             isOnGround = true;
         }
     }
+    
+    
+    
 }
