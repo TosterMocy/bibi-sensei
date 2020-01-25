@@ -12,6 +12,7 @@ public class BotMovement : MonoBehaviour
     void Start()
     {
         rb = transform.GetComponent<Rigidbody2D>();
+        transform.GetComponentInChildren<Canvas>().worldCamera = Camera.main;
     }
 
     // Update is called once per frame
@@ -19,13 +20,14 @@ public class BotMovement : MonoBehaviour
     {
         if (Player != null)
         {
-            if( Player.position.x >= transform.position.x-2f)
-            {
-                rb.velocity += (Vector2.right*movementSpeed);
-            }
-            if (Player.position.x <= transform.position.x - 2f)
+            
+            if (Player.position.x <= transform.position.x + 2f)
             {
                 rb.velocity += (Vector2.left*movementSpeed);
+            }
+            if( Player.position.x >= transform.position.x+2f)
+            {
+                rb.velocity += (Vector2.right*movementSpeed);
             }
         }
     }
