@@ -8,8 +8,9 @@ using UnityEngine;
 public class EndGame : MonoBehaviour
 {
     [SerializeField] private GameObject endGameCanvas;
+    [SerializeField] private GameObject wall;
 
-    public CanvasGroup _canvasGroup;
+    private CanvasGroup _canvasGroup;
 
     private void Start()
     {
@@ -23,6 +24,8 @@ public class EndGame : MonoBehaviour
             endGameCanvas.SetActive(true);
 
             _canvasGroup.DOFade(1f, 2f);
+            
+            wall.SetActive(true);
 
         }
     }

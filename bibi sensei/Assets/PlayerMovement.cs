@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float JumpHeight = 10.0f;
 
     private Rigidbody2D _rigidbody2D;
+    private float scaleX;
 
     private bool isOnGround = true;
     
@@ -16,8 +17,10 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         _rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
+        scaleX = transform.localScale.x;
     }
-    
+
+   
     private void FixedUpdate()
     {
         if(Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W))
@@ -33,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             _rigidbody2D.velocity += (Vector2.right*MovementSpeed);
-            
+
         }
         if (Input.GetKey(KeyCode.A))
         {
@@ -47,6 +50,13 @@ public class PlayerMovement : MonoBehaviour
             rigidbody2DVelocity.x = 0;
 
         }
+        
+        if (_rigidbody2D.velocity.x > 0) scaleX = -1;
+        if (_rigidbody2D.velocity.x < 0) scaleX = 1;
+        
+        transform.localScale = new Vector3(scaleX, 1f, 1f);
+
+        
 
 
     }
